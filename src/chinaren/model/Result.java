@@ -1,7 +1,7 @@
 package chinaren.model;
 
 /**
- * 数据持久层操作的结果
+ * 操作结果的封装类
  * @ClassName Result
  * @author 李浩然
  * @date 2017年7月20日

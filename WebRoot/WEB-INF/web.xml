@@ -38,7 +38,7 @@
 	</session-config>
 
 	<listener>
-		<listener-class>org.invoice.session.SessionListener</listener-class>
+		<listener-class>chinaren.common.SessionListener</listener-class>
 	</listener>
 
 	<welcome-file-list>

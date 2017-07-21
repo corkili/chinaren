@@ -4,7 +4,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context
@@ -17,7 +17,8 @@
 	<context:component-scan base-package="chinaren.common" />
 	<context:property-placeholder location="classpath:*.properties" file-encoding="UTF-8" />
 
-	<mvc:annotation-driven conversion-service="conversionService" />
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- <mvc:annotation-driven conversion-service="conversionService" /> -->
 	<mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
 	<mvc:resources mapping="/*.html" location="/" />
 	<mvc:resources mapping="/js/**" location="/WEB-INF/js/" />
@@ -58,7 +59,7 @@
 			<mvc:exclude-mapping path="/**/*.gif" />
 			<mvc:exclude-mapping path="/**/*.png" />
 			<mvc:exclude-mapping path="/**/vendors/**" />
-			<bean id="SessionInterceptor" class="org.invoice.session.SessionInterceptor" />
+			<bean id="SessionInterceptor" class="chinaren.common.SessionInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

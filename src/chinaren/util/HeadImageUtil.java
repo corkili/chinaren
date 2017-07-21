@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -20,11 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class HeadImageUtil {
 	
-	public static final String PATH_NAME = "images";
+	public static final String SEPARATOR = File.separator;
+	public static final String PATH_NAME = "WEB-INF" + SEPARATOR + "images";
 	public static final String BASE_NAME = "headImage_";
 	public static final String POSTFIX = ".png";
 	public static final String DEFAULT_IMAGE = "defaultHeadImage" + POSTFIX;
-	public static final String SEPARATOR = File.separator;
 	
 	/**
 	 * 私有构造方法
