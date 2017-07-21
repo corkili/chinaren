@@ -1,11 +1,17 @@
 package chinaren.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import chinaren.model.Class;
@@ -24,6 +30,10 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@Autowired
+	private AttendDao attendDao;
+	
+	
 	private Logger logger = Logger.getLogger(ClassDaoImpl.class);
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss - ");
@@ -40,18 +50,88 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<Class> selectClassByClassId(long classId) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: select a class by class id");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_CLASS_ID + "=?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		Class clazz = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { classId };
+			clazz = jdbcTemplate.queryForObject(sql, params, rowMapper);
+			successful = clazz != null;
+			message = successful ? "select<successful>" : "select<failed>";
+			if (successful) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				successful = result.isSuccessful();
+				message = message + " and " + result.getMessage();
+				if (successful) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					successful = result.isSuccessful();
+					message += " and " + result.getMessage();
+					if (successful) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+		} catch (Exception e) {
+			successful = false;
+			message = "select<failed>";
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<Class>(successful, message, clazz);
 	}
 
 	/**
 	 * @see chinaren.dao.ClassDao#selectClass(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Result<Class> selectClass(String province, String city, String area, String school, String gradeYear,
-			String className) {
-		// TODO Auto-generated method stub
-		return null;
+	public Result<Class> selectClass(String province, String city, String area, 
+			String school, String gradeYear, String className) {
+		logger.info(dateFormat.format(new Date()) + "action: select a class by class information");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_PROVINCE + "=? and "
+				+ COL_CITY + "=? and " + COL_AREA + "=? and " + COL_SCHOOL + "=? and " 
+				+ COL_GRADE_YEAR + "=? and " + COL_CLASS_NAME + "=?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		Class clazz = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { province, city, area, school, gradeYear, className };
+			clazz = jdbcTemplate.queryForObject(sql, params, rowMapper);
+			successful = clazz != null;
+			message = successful ? "select<successful>" : "select<failed>";
+			if (successful) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				successful = result.isSuccessful();
+				message = message + " and " + result.getMessage();
+				if (successful) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					successful = result.isSuccessful();
+					message += " and " + result.getMessage();
+					if (successful) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+		} catch (Exception e) {
+			successful = false;
+			message = "select<failed>";
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<Class>(successful, message, clazz);
 	}
 
 	/**
@@ -59,8 +139,41 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<List<Class>> selectClassesByManagerId(long managerId) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: select classes by manager id");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_MANAGER_ID + "=?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		List<Class> classes = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { managerId };
+			classes = jdbcTemplate.query(sql, params, rowMapper);
+			classes = classes != null ? classes : new ArrayList<Class>();
+			successful = true;
+			message = successful ? "select<successful>" : "select<failed>";
+			for (Class clazz : classes) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				if (result.isSuccessful()) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+			classes.removeAll(Collections.singleton(null));	// 移除null元素
+		} catch (DataAccessException e) {
+			successful = false;
+			message = "select<failed>";
+			classes = new ArrayList<Class>();
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<List<Class>>(successful, message, classes);
 	}
 
 	/**
@@ -68,8 +181,41 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<List<Class>> selectClasses(String province) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: select classes by class information");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_PROVINCE + "=?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		List<Class> classes = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { province };
+			classes = jdbcTemplate.query(sql, params, rowMapper);
+			classes = classes != null ? classes : new ArrayList<Class>();
+			successful = true;
+			message = successful ? "select<successful>" : "select<failed>";
+			for (Class clazz : classes) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				if (result.isSuccessful()) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+			classes.removeAll(Collections.singleton(null));	// 移除null元素
+		} catch (DataAccessException e) {
+			successful = false;
+			message = "select<failed>";
+			classes = new ArrayList<Class>();
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<List<Class>>(successful, message, classes);
 	}
 
 	/**
@@ -77,8 +223,42 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<List<Class>> selectClasses(String province, String city) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: select classes by class information");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_PROVINCE + "=? and "
+				+ COL_CITY + "=?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		List<Class> classes = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { province, city };
+			classes = jdbcTemplate.query(sql, params, rowMapper);
+			classes = classes != null ? classes : new ArrayList<Class>();
+			successful = true;
+			message = successful ? "select<successful>" : "select<failed>";
+			for (Class clazz : classes) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				if (result.isSuccessful()) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+			classes.removeAll(Collections.singleton(null));	// 移除null元素
+		} catch (DataAccessException e) {
+			successful = false;
+			message = "select<failed>";
+			classes = new ArrayList<Class>();
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<List<Class>>(successful, message, classes);
 	}
 
 	/**
@@ -86,8 +266,42 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<List<Class>> selectClasses(String province, String city, String area) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: select classes by class information");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_PROVINCE + "=? and "
+				+ COL_CITY + "=? and " + COL_AREA + "=?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		List<Class> classes = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { province, city, area };
+			classes = jdbcTemplate.query(sql, params, rowMapper);
+			classes = classes != null ? classes : new ArrayList<Class>();
+			successful = true;
+			message = successful ? "select<successful>" : "select<failed>";
+			for (Class clazz : classes) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				if (result.isSuccessful()) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+			classes.removeAll(Collections.singleton(null));	// 移除null元素
+		} catch (DataAccessException e) {
+			successful = false;
+			message = "select<failed>";
+			classes = new ArrayList<Class>();
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<List<Class>>(successful, message, classes);
 	}
 
 	/**
@@ -95,8 +309,42 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<List<Class>> selectClasses(String province, String city, String area, String school) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: select classes by class information");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_PROVINCE + "=? and "
+				+ COL_CITY + "=? and " + COL_AREA + "=? and " + COL_SCHOOL + " like ?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		List<Class> classes = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { province, city, area, "%" + school + "%" };
+			classes = jdbcTemplate.query(sql, params, rowMapper);
+			classes = classes != null ? classes : new ArrayList<Class>();
+			successful = true;
+			message = successful ? "select<successful>" : "select<failed>";
+			for (Class clazz : classes) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				if (result.isSuccessful()) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+			classes.removeAll(Collections.singleton(null));	// 移除null元素
+		} catch (DataAccessException e) {
+			successful = false;
+			message = "select<failed>";
+			classes = new ArrayList<Class>();
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<List<Class>>(successful, message, classes);
 	}
 
 	/**
@@ -105,18 +353,89 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	@Override
 	public Result<List<Class>> selectClasses(String province, String city, String area, String school,
 			String gradeYear) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: select classes by class information");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_PROVINCE + "=? and "
+				+ COL_CITY + "=? and " + COL_AREA + "=? and " + COL_SCHOOL + " like ? and " 
+				+ COL_GRADE_YEAR + " like ?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		List<Class> classes = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { province, city, area, "%" + school + "%", "%" + gradeYear + "%" };
+			classes = jdbcTemplate.query(sql, params, rowMapper);
+			classes = classes != null ? classes : new ArrayList<Class>();
+			successful = true;
+			message = successful ? "select<successful>" : "select<failed>";
+			for (Class clazz : classes) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				if (result.isSuccessful()) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+			classes.removeAll(Collections.singleton(null));	// 移除null元素
+		} catch (DataAccessException e) {
+			successful = false;
+			message = "select<failed>";
+			classes = new ArrayList<Class>();
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<List<Class>>(successful, message, classes);
 	}
 
 	/**
 	 * @see chinaren.dao.ClassDao#selectClasses(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Result<List<Class>> selectClasses(String province, String city, String area, String school, String gradeYear,
-			String className) {
-		// TODO Auto-generated method stub
-		return null;
+	public Result<List<Class>> selectClasses(String province, String city, String area, 
+			String school, String gradeYear, String className) {
+		logger.info(dateFormat.format(new Date()) + "action: select classes by class information");
+		String sql = "select * from " + TABLE_CLASS + " where " + COL_PROVINCE + "=? and "
+				+ COL_CITY + "=? and " + COL_AREA + "=? and " + COL_SCHOOL + " like ? and " 
+				+ COL_GRADE_YEAR + " like ? and " + COL_CLASS_NAME + " like ?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		List<Class> classes = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { province, city, area, "%" + school + "%", 
+					"%" + gradeYear + "%", "%" + className + "%" };
+			classes = jdbcTemplate.query(sql, params, rowMapper);
+			classes = classes != null ? classes : new ArrayList<Class>();
+			successful = true;
+			message = successful ? "select<successful>" : "select<failed>";
+			for (Class clazz : classes) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				if (result.isSuccessful()) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+			classes.removeAll(Collections.singleton(null));	// 移除null元素
+		} catch (DataAccessException e) {
+			successful = false;
+			message = "select<failed>";
+			classes = new ArrayList<Class>();
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<List<Class>>(successful, message, classes);
 	}
 
 	/**
@@ -124,8 +443,49 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<Class> insertClass(Class clazz) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: insert a new class");
+		String sql = "insert into " + TABLE_CLASS + " ("
+				+ COL_SCHOOL + "," + COL_CLASS_NAME + "," + COL_GRADE_YEAR + ","
+				+ COL_DESCRIPTION + "," + COL_PROVINCE + "," + COL_CITY + ","
+				+ COL_AREA + "," + COL_MANAGER_ID + ") values(?,?,?,?,?,?,?,?)";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		Class newClass = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			Object[] params = { clazz.getSchool(), clazz.getClassName(), clazz.getGradeYear(),
+					clazz.getDecription(), clazz.getProvince(), clazz.getCity(), 
+					clazz.getArea(), clazz.getManagerId()};
+			successful = jdbcTemplate.update(sql, params) == 1;
+			message = successful ? "insert<successful>" : "insert<failed>";
+			if (successful) {
+				Result<Class> result = selectClass(clazz.getProvince(), 
+						clazz.getCity(), clazz.getArea(), clazz.getSchool(),
+						clazz.getGradeYear(), clazz.getClassName());
+				successful = result.isSuccessful();
+				message = message + " and " + result.getMessage();
+				newClass = result.getResult();
+				// 添加关系
+				if (attendDao.insertAttend(newClass.getManagerId(), newClass.getClassId()).isSuccessful()) {
+					result = selectClass(clazz.getProvince(), 
+							clazz.getCity(), clazz.getArea(), clazz.getSchool(),
+							clazz.getGradeYear(), clazz.getClassName());
+					successful = result.isSuccessful();
+					message += " and insert<successful>";
+					newClass = result.getResult();
+				} else {
+					deleteClass(newClass.getClassId());
+					successful = false;
+					newClass = null;
+					message += " and insert<failed>";
+				}
+			}
+		} catch (Exception e) {
+			successful = false;
+			message = "insert<failed>";
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<Class>(successful, message, newClass);
 	}
 
 	/**
@@ -133,8 +493,22 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<Boolean> deleteClass(long classId) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: delete class by message id");
+		String sql = "delete from " + TABLE_CLASS + " where " + COL_CLASS_ID + "=?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		boolean successful = false;
+		String message = "";
+		try {
+			Object[] params = { classId };
+			successful = jdbcTemplate.update(sql, params) == 1;
+			successful &= attendDao.deleteAttendByClassId(classId).isSuccessful();
+			message = successful ? "delete<successful>" : "delete<failed>";
+		} catch (Exception e) {
+			successful = false;
+			message = "delete<failed>";
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<Boolean>(successful, message, successful);
 	}
 
 	/**
@@ -142,8 +516,28 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	 */
 	@Override
 	public Result<Class> updateDescription(long classId, String description) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info(dateFormat.format(new Date()) + "action: update class's description");
+		String sql = "update " + TABLE_CLASS + " set " + COL_DESCRIPTION + "=? where " + COL_CLASS_ID + "=?";
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		Class clazz = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			Object[] params = { description, classId };
+			successful = jdbcTemplate.update(sql, params) == 1;
+			message = successful ? "update<successful>" : "update<failed>";
+			if (successful) {
+				Result<Class> result = selectClassByClassId(classId);
+				clazz = result.getResult();
+				successful = result.isSuccessful();
+				message = message + " and " + result.getMessage();
+			}
+		} catch (Exception e) {
+			successful = false;
+			message = "update<failed>";
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<Class>(successful, message, clazz);
 	}
 
 }
