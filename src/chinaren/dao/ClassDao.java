@@ -44,7 +44,7 @@ public interface ClassDao {
 	/**
 	 * 根据班级管理者的用户ID，从数据库中获取班级数据
 	 * @author 李浩然
-	 * @param managerId
+	 * @param managerId 班级管理者的用户ID
 	 * @return 包含一个班级实体列表的结果实例，若操作失败或不存在相应数据，结果中的班级列表为空列表
 	 */
 	public Result<List<Class>> selectClassesByManagerId(long managerId);

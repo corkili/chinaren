@@ -1,4 +1,5 @@
 chinaren.common
 chinaren.dao
 chinaren.model
+chinaren.service
 chinaren.util
