@@ -26,12 +26,12 @@ public class User implements Serializable {
 	/**
 	 * 性别类型-男
 	 */
-	public static final char SEX_MAN = 'm';
+	public static final String SEX_MAN = "男";
 
 	/**
 	 * 性别类型-女
 	 */
-	public static final char SEX_WOMAN = 'w';
+	public static final String SEX_WOMAN = "女";
 
 	/**
 	 * 用户ID
@@ -61,7 +61,7 @@ public class User implements Serializable {
 	 * 性别
 	 */
 	@Column(name = BaseDao.COL_SEX)
-	private char sex;
+	private String sex;
 
 	/**
 	 * 手机号
@@ -170,14 +170,14 @@ public class User implements Serializable {
 	/**
 	 * @return the sex
 	 */
-	public char getSex() {
+	public String getSex() {
 		return sex;
 	}
 
 	/**
 	 * @param sex the sex to set
 	 */
-	public void setSex(char sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
