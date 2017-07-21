@@ -83,6 +83,11 @@ public class Class implements Serializable{
 	private List<Long> classmates;
 	
 	/**
+	 * 申请加入班级的用户的ID列表
+	 */
+	private List<Long> notApplys;
+	
+	/**
 	 * 构造函数，初始化classmates为空列表
 	 */
 	public Class() {
@@ -229,6 +234,20 @@ public class Class implements Serializable{
 		this.classmates = classmates;
 	}
 
+	/**
+	 * @return the notApplys
+	 */
+	public List<Long> getNotApplys() {
+		return notApplys;
+	}
+
+	/**
+	 * @param notApplys the notApplys to set
+	 */
+	public void setNotApplys(List<Long> notApplys) {
+		this.notApplys = notApplys;
+	}
+	
 	/**
 	 * 判断用户是否在班级中
 	 * @author 李浩然

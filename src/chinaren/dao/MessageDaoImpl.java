@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import chinaren.model.Message;
 import chinaren.model.Result;
@@ -21,6 +22,7 @@ import chinaren.model.Result;
  * @date 2017年7月20日
  * @version 1.0
  */
+@Repository
 public class MessageDaoImpl extends BaseDao implements MessageDao {
 
 	@Autowired
@@ -43,7 +45,7 @@ public class MessageDaoImpl extends BaseDao implements MessageDao {
 	@Override
 	public Result<Message> selectMessageById(long messageId) {
 		logger.info(dateFormat.format(new Date()) + "action: select message by message id");
-		String sql = "select * from" + TABLE_MESSAGE + " where " + COL_MESSAGE_ID + "=?";
+		String sql = "select * from " + TABLE_MESSAGE + " where " + COL_MESSAGE_ID + "=?";
 		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
 		Message msg = null;
 		boolean successful = false;
@@ -68,7 +70,7 @@ public class MessageDaoImpl extends BaseDao implements MessageDao {
 	@Override
 	public Result<List<Message>> selectMessagesByClassId(long classId) {
 		logger.info(dateFormat.format(new Date()) + "action: select messages by class id");
-		String sql = "select * from" + TABLE_MESSAGE + " where " + COL_CLASS_ID + "=?";
+		String sql = "select * from " + TABLE_MESSAGE + " where " + COL_CLASS_ID + "=?";
 		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
 		List<Message> msgs = null;
 		boolean successful = false;
@@ -95,7 +97,7 @@ public class MessageDaoImpl extends BaseDao implements MessageDao {
 	@Override
 	public Result<List<Message>> selectMessageByUserId(long userId) {
 		logger.info(dateFormat.format(new Date()) + "action: select messages by user id");
-		String sql = "select * from" + TABLE_MESSAGE + " where " + COL_USER_ID + "=?";
+		String sql = "select * from " + TABLE_MESSAGE + " where " + COL_USER_ID + "=?";
 		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
 		List<Message> msgs = null;
 		boolean successful = false;

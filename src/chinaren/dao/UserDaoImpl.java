@@ -50,7 +50,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	@Override
 	public Result<User> selectUserByUserId(long userId) {
 		logger.info(dateFormat.format(new Date()) + "action: select user by user id");
-		String sql = "select * from" + TABLE_USER + " where " + COL_USER_ID + "=?";
+		String sql = "select * from " + TABLE_USER + " where " + COL_USER_ID + "=?";
 		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
 		User user = null;
 		boolean successful = false;
@@ -62,11 +62,19 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			successful = user != null;
 			message = successful ? "select<successful>" : "select<failed>";
 			if (successful) {
-				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId());
+				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_TRUE);
 				successful = result.isSuccessful();
 				message = message + " and " + result.getMessage();
 				if (successful) {
 					user.setBelongClass(result.getResult());
+					result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_FALSE);
+					successful = result.isSuccessful();
+					message += " and " + result.getMessage();
+					if (successful) {
+						user.setApplyClass(result.getResult());
+					} else {
+						user = null;
+					}
 				} else {
 					user = null;
 				}
@@ -85,7 +93,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	@Override
 	public Result<User> selectUserByEmail(String email) {
 		logger.info(dateFormat.format(new Date()) + "action: select user by email");
-		String sql = "select * from" + TABLE_USER + " where " + COL_EMAIL + "=?";
+		String sql = "select * from " + TABLE_USER + " where " + COL_EMAIL + "=?";
 		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
 		User user = null;
 		boolean successful = false;
@@ -97,11 +105,19 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			successful = user != null;
 			message = successful ? "select<successful>" : "select<failed>";
 			if (successful) {
-				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId());
+				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_TRUE);
 				successful = result.isSuccessful();
 				message = message + " and " + result.getMessage();
 				if (successful) {
 					user.setBelongClass(result.getResult());
+					result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_FALSE);
+					successful = result.isSuccessful();
+					message += " and " + result.getMessage();
+					if (successful) {
+						user.setApplyClass(result.getResult());
+					} else {
+						user = null;
+					}
 				} else {
 					user = null;
 				}
@@ -120,7 +136,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	@Override
 	public Result<List<User>> selectUsersByClassId(long classId) {
 		logger.info(dateFormat.format(new Date()) + "action: select users by class id");
-		String sql = "select * from" + TABLE_USER + " where " + COL_CLASS_ID + "=?";
+		String sql = "select * from " + TABLE_USER + " where " + COL_CLASS_ID + "=?";
 		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
 		List<User> users = null;
 		boolean successful = false;
@@ -133,9 +149,15 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			successful = true;
 			message = successful ? "select<successful>" : "select<failed>";
 			for (User user : users) {
-				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId());
+				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_TRUE);
 				if (result.isSuccessful()) {
 					user.setBelongClass(result.getResult());
+					result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						user.setApplyClass(result.getResult());
+					} else {
+						user = null;
+					}
 				} else {
 					user = null;
 				}

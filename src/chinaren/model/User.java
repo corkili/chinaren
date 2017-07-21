@@ -105,6 +105,11 @@ public class User implements Serializable {
 	private List<Long> belongClass;
 
 	/**
+	 * 用户申请加入的班级的ID列表
+	 */
+	private List<Long> applyClass;
+	
+	/**
 	 * 构造函数，初始化belongClass为空列表
 	 */
 	public User() {
@@ -277,5 +282,19 @@ public class User implements Serializable {
 	 */
 	public void setBelongClass(List<Long> belongClass) {
 		this.belongClass = belongClass;
+	}
+
+	/**
+	 * @return the applyClass
+	 */
+	public List<Long> getApplyClass() {
+		return applyClass;
+	}
+
+	/**
+	 * @param applyClass the applyClass to set
+	 */
+	public void setApplyClass(List<Long> applyClass) {
+		this.applyClass = applyClass;
 	}
 }

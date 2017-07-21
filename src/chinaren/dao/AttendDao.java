@@ -17,17 +17,19 @@ public interface AttendDao {
 	 * 根据班级ID，从数据库中获取该班级中所有同学的ID
 	 * @author 李浩然
 	 * @param classId 指定班级的ID
+	 * @param status 审核状态
 	 * @return 包含一个用户ID列表的结果实例，若操作失败或不存在相应数据，结果中的列表为空列表
 	 */
-	public Result<List<Long>> selectUserIdByClassId(long classId);
+	public Result<List<Long>> selectUserIdByClassId(long classId, char status);
 	
 	/**
 	 * 根据用户ID，从数据库中获取该用户所在的所有班级的ID
 	 * @author 李浩然
 	 * @param userId 指定用户的ID
+	 * @param status 审核状态
 	 * @return 包含一个用户ID列表的结果实例，若操作失败或不存在相应数据，结果中的列表为空列表
 	 */
-	public Result<List<Long>> selectClassIdByUserId(long userId);
+	public Result<List<Long>> selectClassIdByUserId(long userId, char status);
 	
 	/**
 	 * 向数据库中插入一条关系，表示一个用户加入了一个班级
@@ -54,4 +56,13 @@ public interface AttendDao {
 	 * @return 包含一个Boolean的结果实例
 	 */
 	public Result<Boolean> deleteAttendByClassId(long classId);
+	
+	/**
+	 * 修改数据库中班级-同学关系的状态为True
+	 * @author 李浩然
+	 * @param userId 要修改的关系的用户ID
+	 * @param classId 要修改的关系的班级ID
+	 * @return 包含一个Boolean的结果实例
+	 */
+	public Result<Boolean> updateAttendStatus(long userId, long classId);
 }
