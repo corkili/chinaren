@@ -1,11 +1,8 @@
-/**
- * 
- */
 package chinaren.dao;
 
 /**
+ * 数据持久层基类，包含了各种公用的字段
  * @ClassName BaseDao
- * @Description 数据持久层基类，包含了各种公用的字段
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0

@@ -1,11 +1,8 @@
-/**
- * 
- */
 package chinaren.model;
 
 /**
+ * 数据持久层操作的结果
  * @ClassName Result
- * @Description 数据持久层操作的结果
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0

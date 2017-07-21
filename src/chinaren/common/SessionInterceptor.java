@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * 自定义Session拦截器
  * @ClassName SessionInterceptor
- * @Description 自定义Session拦截器
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0
@@ -19,8 +19,11 @@ import javax.servlet.http.HttpSession;
 @Component("SpringMVCInterceptor")
 public class SessionInterceptor implements HandlerInterceptor {
 
-    Logger logger = Logger.getLogger(SessionInterceptor.class);
+    private Logger logger = Logger.getLogger(SessionInterceptor.class);
 
+    /**
+     * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -53,11 +56,17 @@ public class SessionInterceptor implements HandlerInterceptor {
         return true;
     }
 
+    /**
+     * @see org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+     */
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
 
     }
 
+    /**
+     * @see org.springframework.web.servlet.HandlerInterceptor#afterCompletion(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, java.lang.Exception)
+     */
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
 

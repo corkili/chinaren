@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chinaren.dao;
 
 import java.util.List;
@@ -13,8 +10,8 @@ import chinaren.model.Message;
 import chinaren.model.Result;
 
 /**
+ * 留言数据持久层实现类
  * @ClassName MessageDaoImpl
- * @Description 留言数据持久层实现类
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chinaren.model;
 
 import java.io.Serializable;
@@ -14,8 +11,8 @@ import javax.persistence.Table;
 import chinaren.dao.BaseDao;
 
 /**
+ * 班级实体类
  * @ClassName Class
- * @Description 班级实体类
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0
@@ -233,7 +230,7 @@ public class Class implements Serializable{
 	}
 
 	/**
-	 * @Description 判断用户是否在班级中
+	 * 判断用户是否在班级中
 	 * @author 李浩然
 	 * @param userId 待判断用户的ID
 	 * @return 若在班级中，返回true；否则，返回false
@@ -248,7 +245,7 @@ public class Class implements Serializable{
 	}
 	
 	/**
-	 * @Description 判断用户是否为班级管理者
+	 * 判断用户是否为班级管理者
 	 * @author 李浩然
 	 * @param userId 待判断用户的ID
 	 * @return 若是管理者，返回true；否则，返回false

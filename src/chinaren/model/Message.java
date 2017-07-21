@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chinaren.model;
 
 import java.io.Serializable;
@@ -13,8 +10,8 @@ import javax.persistence.Table;
 import chinaren.dao.BaseDao;
 
 /**
+ * 留言实体类
  * @ClassName Message
- * @Description 留言实体类
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0

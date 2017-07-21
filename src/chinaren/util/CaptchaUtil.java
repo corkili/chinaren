@@ -16,8 +16,8 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
+ * 关于验证码的工具类
  * @ClassName CaptchaUtil
- * @Description 关于验证码的工具类
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0
@@ -39,8 +39,10 @@ public final class CaptchaUtil
      */
     private static Random random = new Random();
 
-    /*
+    /**
      * 获取6位随机数
+     * @author 李浩然
+     * @return 六位随机数字符串
      */
     private static String getRandomString()
     {
@@ -52,8 +54,10 @@ public final class CaptchaUtil
         return buffer.toString();
     }
 
-    /*
+    /**
      * 获取随机数颜色
+     * @author 李浩然
+     * @return 随机的一种颜色
      */
     private static Color getRandomColor()
     {
@@ -61,8 +65,11 @@ public final class CaptchaUtil
                 random.nextInt(255));
     }
 
-    /*
+    /**
      * 返回某颜色的反色
+     * @author 李浩然
+     * @param c
+     * @return 颜色的反色
      */
     private static Color getReverseColor(Color c)
     {
@@ -70,6 +77,14 @@ public final class CaptchaUtil
                 255 - c.getBlue());
     }
 
+    /**
+     * 输出随机数
+     * @author 李浩然
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public static void outputCaptcha(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {

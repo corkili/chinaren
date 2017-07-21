@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chinaren.dao;
 
 import java.util.List;
@@ -9,8 +6,8 @@ import chinaren.model.Class;
 import chinaren.model.Result;
 
 /**
+ * 班级数据持久层接口
  * @ClassName ClassDao
- * @Description 班级数据持久层接口
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0
@@ -18,7 +15,7 @@ import chinaren.model.Result;
 public interface ClassDao {
 	
 	/**
-	 * @Description 根据班级ID，从数据库中获取班级实体数据
+	 * 根据班级ID，从数据库中获取班级实体数据
 	 * @author 李浩然
 	 * @param classId 指定的班级ID
 	 * @return 包含一个班级实体的结果实例，若操作失败或不存在相应数据，结果中的班级实体为null
@@ -26,7 +23,7 @@ public interface ClassDao {
 	public Result<Class> selectClassByClassId(long classId);
 	
 	/**
-	 * @Description 根据班级信息，从数据库中获取班级实体数据（完全匹配）
+	 * 根据班级信息，从数据库中获取班级实体数据（完全匹配）
 	 * @author 李浩然
 	 * @param province 省份
 	 * @param city 城市
@@ -45,7 +42,7 @@ public interface ClassDao {
 			String className);
 	
 	/**
-	 * @Description 根据班级管理者的用户ID，从数据库中获取班级数据
+	 * 根据班级管理者的用户ID，从数据库中获取班级数据
 	 * @author 李浩然
 	 * @param managerId
 	 * @return 包含一个班级实体列表的结果实例，若操作失败或不存在相应数据，结果中的班级列表为空列表
@@ -53,7 +50,7 @@ public interface ClassDao {
 	public Result<List<Class>> selectClassesByManagerId(long managerId);
 	
 	/**
-	 * @Description 根据班级信息，从数据库中获取班级实体数据（完全匹配）
+	 * 根据班级信息，从数据库中获取班级实体数据（完全匹配）
 	 * @author 李浩然
 	 * @param province 省份
 	 * @return 包含一个班级实体列表的结果实例，若操作失败或不存在相应数据，结果中的班级列表为空列表
@@ -61,7 +58,7 @@ public interface ClassDao {
 	public Result<List<Class>> selectClasses(String province);
 	
 	/**
-	 * @Description 根据班级信息，从数据库中获取班级实体数据（完全匹配）
+	 * 根据班级信息，从数据库中获取班级实体数据（完全匹配）
 	 * @author 李浩然
 	 * @param province 省份
 	 * @param city 城市
@@ -70,7 +67,7 @@ public interface ClassDao {
 	public Result<List<Class>> selectClasses(String province, String city);
 	
 	/**
-	 * @Description 根据班级信息，从数据库中获取班级实体数据（完全匹配）
+	 * 根据班级信息，从数据库中获取班级实体数据（完全匹配）
 	 * @author 李浩然
 	 * @param province 省份
 	 * @param city 城市
@@ -83,7 +80,7 @@ public interface ClassDao {
 			String area);
 	
 	/**
-	 * @Description 根据班级信息，从数据库中获取班级实体数据（模糊查询）
+	 * 根据班级信息，从数据库中获取班级实体数据（模糊查询）
 	 * @author 李浩然
 	 * @param province 省份
 	 * @param city 城市
@@ -98,7 +95,7 @@ public interface ClassDao {
 			String school);
 	
 	/**
-	 * @Description 根据班级信息，从数据库中获取班级实体数据（模糊查询）
+	 * 根据班级信息，从数据库中获取班级实体数据（模糊查询）
 	 * @author 李浩然
 	 * @param province 省份
 	 * @param city 城市
@@ -115,7 +112,7 @@ public interface ClassDao {
 			String gradeYear);
 	
 	/**
-	 * @Description 根据班级信息，从数据库中获取班级实体数据（模糊查询）
+	 * 根据班级信息，从数据库中获取班级实体数据（模糊查询）
 	 * @author 李浩然
 	 * @param province 省份
 	 * @param city 城市
@@ -134,7 +131,7 @@ public interface ClassDao {
 			String className);
 	
 	/**
-	 * @Description 向数据库中添加一个班级实体
+	 * 向数据库中添加一个班级实体
 	 * @author 李浩然
 	 * @param clazz 待添加的班级实体
 	 * @return 包含一个班级实体的结果实例，若操作失败，结果中的班级实体为null，否则，为新插入的班级实体
@@ -142,7 +139,7 @@ public interface ClassDao {
 	public Result<Class> insertClass(Class clazz);
 	
 	/**
-	 * @Description 从数据库中删除指定的班级数据
+	 * 从数据库中删除指定的班级数据
 	 * @author 李浩然
 	 * @param classId 指定班级的ID
 	 * @return 包含Boolean的结果实例
@@ -150,7 +147,7 @@ public interface ClassDao {
 	public Result<Boolean> deleteClass(long classId);
 	
 	/**
-	 * @Description 更新数据库中指定班级的班级描述
+	 * 更新数据库中指定班级的班级描述
 	 * @author 李浩然
 	 * @param classId 指定班级的ID
 	 * @param description 待替换的新班级描述

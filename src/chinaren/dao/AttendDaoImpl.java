@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chinaren.dao;
 
 import java.util.List;
@@ -12,8 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import chinaren.model.Result;
 
 /**
+ * 班级-同学关系数据持久层实现类
  * @ClassName AttendDaoImpl
- * @Description 班级-同学关系数据持久层实现类
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0

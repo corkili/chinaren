@@ -6,8 +6,8 @@ import java.security.MessageDigest;
 import java.util.Random;
 
 /**
+ * 关于哈希加密的工具类
  * @ClassName HashUtil
- * @Description 关于哈希加密的工具类
  * @author 李浩然
  * @date 2017年7月20日
  * @version 1.0
@@ -15,6 +15,9 @@ import java.util.Random;
 public class HashUtil {
     /**
      * 生成含有随机盐的密码
+     * @author 李浩然
+     * @param password 待转换的原始密码
+     * @return 加盐哈希处理后的密码
      */
     public static String generate(String password) {
         Random r = new Random();
@@ -39,7 +42,12 @@ public class HashUtil {
     }
 
     /**
+     * 
      * 校验密码是否正确
+     * @author 李浩然
+     * @param password 待验证的原始密码
+     * @param md5 待匹配的哈希值
+     * @return 若匹配成功，返回true；否则，返回false
      */
     public static boolean verify(String password, String md5) {
         char[] cs1 = new char[32];
@@ -53,6 +61,12 @@ public class HashUtil {
         return md5Hex(password + salt).equals(new String(cs1));
     }
 
+    /**
+     * 从哈希值从提取盐
+     * @author 李浩然
+     * @param md5 待提取的哈希值字符串
+     * @return 提取出的盐
+     */
     public static String getSalt(String md5) {
         char[] salt = new char[16];
         for (int i = 0; i < 48; i += 3) {
@@ -63,6 +77,9 @@ public class HashUtil {
 
     /**
      * 获取十六进制字符串形式的MD5摘要
+     * @author 李浩然
+     * @param src 待转换的字符串
+     * @return 转换后的字符串
      */
     public static String md5Hex(String src) {
         try {
@@ -74,12 +91,12 @@ public class HashUtil {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String password = generate("45678901");
         System.out.println(password);
         System.out.println(password.length());
         System.out.println(getSalt(password));
         System.out.println(verify("admin", password));
-    }
+    }*/
 
 }
