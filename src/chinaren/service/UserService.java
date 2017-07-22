@@ -83,6 +83,23 @@ public interface UserService {
 	 * @return 修改用户头像结果
 	 */
 	public Result<Boolean> modifyHeadImage(long userId, MultipartFile image);
+	
+	/**
+	 * 发送邮件服务
+	 * @author 李浩然
+	 * @param email 邮箱地址
+	 * @return 发送结果
+	 */
+	public Result<Boolean> sendEmail(String email);
+	
+	/**
+	 * 验证邮件服务
+	 * @author 李浩然
+	 * @param email 邮箱地址
+	 * @param code 验证码
+	 * @return 验证结果
+	 */
+	public Result<Boolean> verifyEmail(String email, String code);
 }
 
 

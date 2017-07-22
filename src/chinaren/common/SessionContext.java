@@ -100,4 +100,23 @@ public class SessionContext {
     public void setSessionMap(Map<String, HttpSession> sessionMap) {
         this.sessionMap = sessionMap;
     }
+    
+    public void sessionHandlerByCacheMap(HttpSession session) {
+        synchronized (this) {
+            String userId = session.getAttribute(SessionContext.ATTR_USER_ID).toString();
+            HttpSession userSession = (HttpSession) sessionMap.get(userId);
+            if (userSession != null) {
+                // 注销在线用户
+                userSession.invalidate();
+                sessionMap.remove(userId);
+                // 清楚在线用户后，更新map，替换map
+                sessionMap.remove(session.getId());
+                sessionMap.put(userId, session);
+            } else {
+                // 根据当前sessionId取session对象，更新map
+            	sessionMap.put(userId, sessionMap.get(session.getId()));
+            	sessionMap.remove(session.getId());
+            }
+        }
+    }
 }

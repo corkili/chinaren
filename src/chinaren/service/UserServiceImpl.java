@@ -98,4 +98,24 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	/**
+	 * @see chinaren.service.UserService#sendEmail(java.lang.String)
+	 */
+	@Override
+	public Result<Boolean> sendEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see chinaren.service.UserService#verifyEmail(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Result<Boolean> verifyEmail(String email, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
 }
