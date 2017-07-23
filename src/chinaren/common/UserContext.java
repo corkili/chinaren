@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import chinaren.dao.UserDao;
 import chinaren.model.Result;
 import chinaren.model.User;
+import chinaren.util.EmailUtil;
 
 /**
  * 用户数据动态维护类
@@ -55,7 +56,7 @@ public class UserContext {
 	/**
 	 * 获取UserContext实例对象
 	 * @author 李浩然
-	 * @return UserContext实例对象
+	 * @return UserContext单例对象
 	 */
 	public static final UserContext getUserContext() {
 		return UserContextHolder.INSTANCE;
@@ -158,26 +159,3 @@ public class UserContext {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

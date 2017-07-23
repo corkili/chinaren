@@ -1,0 +1,79 @@
+[INFO] [2017-07-23 22:24:26][chinaren.service.UserServiceImpl]2017-07-23 22:24:26 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:25:07][chinaren.service.UserServiceImpl]2017-07-23 22:25:07 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:26:20][chinaren.service.UserServiceImpl]2017-07-23 22:26:20 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:27:43][chinaren.service.UserServiceImpl]2017-07-23 22:27:43 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:27:43][chinaren.service.UserServiceImpl]2017-07-23 22:27:43 - register: validate password - 123456789
+[INFO] [2017-07-23 22:27:43][chinaren.service.UserServiceImpl]2017-07-23 22:27:43 - register: validate name - 李浩然
+[INFO] [2017-07-23 22:27:43][chinaren.service.UserServiceImpl]2017-07-23 22:27:43 - register: validate phone - 15528235793
+[INFO] [2017-07-23 22:27:43][chinaren.service.UserServiceImpl]2017-07-23 22:27:43 - register: create head image
+[INFO] [2017-07-23 22:27:43][chinaren.service.UserServiceImpl]2017-07-23 22:27:43 - register: set default introduction - 此人很懒，什么也没有留下！
+[INFO] [2017-07-23 22:27:43][chinaren.service.UserServiceImpl]2017-07-23 22:27:43 - register: transform password - a7241f946b4901028e92146ed62f2e005c29a6993ae6fe45
+[INFO] [2017-07-23 22:27:43][chinaren.service.UserServiceImpl]2017-07-23 22:27:43 - register: insert user into database
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: validate password - 123456789
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: validate name - 李浩然
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: validate phone - 15528235793
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: create head image
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: set default introduction - 此人很懒，什么也没有留下！
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: transform password - 215225e64c00d74523580b50f39a3eb18c4a09d52c02eb84
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: insert user into database
+[INFO] [2017-07-23 22:28:44][chinaren.dao.UserDaoImpl]2017-07-23 22:28:44 - action: insert a new user
+[INFO] [2017-07-23 22:28:44][chinaren.dao.UserDaoImpl]2017-07-23 22:28:44 - sql: insert into user (email,password,name,sex,phone,introduction,headImage,province,city,area) values(?,?,?,?,?,?,?,?,?,?)
+[INFO] [2017-07-23 22:28:44][chinaren.dao.UserDaoImpl]2017-07-23 22:28:44 - result: insert<failed>
+[INFO] [2017-07-23 22:28:44][chinaren.service.UserServiceImpl]2017-07-23 22:28:44 - register: finished - user 0
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: validate password - 123456789
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: validate name - 李浩然
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: validate phone - 15528235793
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: create head image
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: set default introduction - 此人很懒，什么也没有留下！
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: transform password - c4b89169e48346b52ce47b26f41c45e21636456b0bf91756
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: insert user into database
+[INFO] [2017-07-23 22:29:25][chinaren.dao.UserDaoImpl]2017-07-23 22:29:25 - action: insert a new user
+[INFO] [2017-07-23 22:29:25][chinaren.dao.UserDaoImpl]2017-07-23 22:29:25 - sql: insert into user (email,password,name,sex,phone,introduction,headImage,province,city,area) values(?,?,?,?,?,?,?,?,?,?)
+[INFO] [2017-07-23 22:29:25][chinaren.dao.UserDaoImpl]2017-07-23 22:29:25 - result: insert<failed>
+[INFO] [2017-07-23 22:29:25][chinaren.service.UserServiceImpl]2017-07-23 22:29:25 - register: finished - user 0
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: validate password - 123456789
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: validate name - 李浩然
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: validate phone - 15528235793
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: create head image
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: set default introduction - 此人很懒，什么也没有留下！
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: transform password - 27eb18832754767515d22617891c29f20d80b81a0c272d0a
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: insert user into database
+[INFO] [2017-07-23 22:30:05][chinaren.dao.UserDaoImpl]2017-07-23 22:30:05 - action: insert a new user
+[INFO] [2017-07-23 22:30:05][chinaren.dao.UserDaoImpl]2017-07-23 22:30:05 - sql: insert into user (email,password,name,sex,phone,introduction,headImage,province,city,area) values(?,?,?,?,?,?,?,?,?,?)
+[INFO] [2017-07-23 22:30:05][chinaren.dao.UserDaoImpl]2017-07-23 22:30:05 - result: insert<failed>
+[INFO] [2017-07-23 22:30:05][chinaren.service.UserServiceImpl]2017-07-23 22:30:05 - register: finished - user 0
+[INFO] [2017-07-23 22:30:47][chinaren.service.UserServiceImpl]2017-07-23 22:30:47 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:32:27][chinaren.service.UserServiceImpl]2017-07-23 22:32:27 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:33:32][chinaren.service.UserServiceImpl]2017-07-23 22:33:32 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:35:08][chinaren.service.UserServiceImpl]2017-07-23 22:35:08 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: validate password - 123456789
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: validate name - 李浩然
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: validate phone - 15528235793
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: create head image
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: set default introduction - 此人很懒，什么也没有留下！
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: transform password - f5a71ac4a36e184b7580706fa3914815179e251631272c8b
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: insert user into database
+[INFO] [2017-07-23 22:35:31][chinaren.dao.UserDaoImpl]2017-07-23 22:35:31 - action: insert a new user
+[INFO] [2017-07-23 22:35:31][chinaren.dao.UserDaoImpl]2017-07-23 22:35:31 - sql: insert into user (email,password,name,sex,phone,introduction,headImage,province,city,area) values(?,?,?,?,?,?,?,?,?,?)
+[INFO] [2017-07-23 22:35:31][chinaren.dao.UserDaoImpl]2017-07-23 22:35:31 - result: insert<failed>
+[INFO] [2017-07-23 22:35:31][chinaren.service.UserServiceImpl]2017-07-23 22:35:31 - register: finished - user 0
+[INFO] [2017-07-23 22:36:18][chinaren.service.UserServiceImpl]2017-07-23 22:36:18 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:36:18][chinaren.service.UserServiceImpl]2017-07-23 22:36:18 - register: validate password - 123456789
+[INFO] [2017-07-23 22:36:18][chinaren.service.UserServiceImpl]2017-07-23 22:36:18 - register: validate name - 李浩然
+[INFO] [2017-07-23 22:36:18][chinaren.service.UserServiceImpl]2017-07-23 22:36:18 - register: validate phone - 15528235793
+[INFO] [2017-07-23 22:36:18][chinaren.service.UserServiceImpl]2017-07-23 22:36:18 - register: create head image
+[INFO] [2017-07-23 22:36:18][chinaren.service.UserServiceImpl]2017-07-23 22:36:18 - register: set default introduction - 此人很懒，什么也没有留下！
+[INFO] [2017-07-23 22:36:18][chinaren.service.UserServiceImpl]2017-07-23 22:36:18 - register: transform password - 69bf3d282330143540987b5903a313057d14166092607c0a
+[INFO] [2017-07-23 22:36:18][chinaren.service.UserServiceImpl]2017-07-23 22:36:18 - register: insert user into database
+[INFO] [2017-07-23 22:38:42][chinaren.service.UserServiceImpl]2017-07-23 22:38:42 - register: validate email - 15528235793@163.com
+[INFO] [2017-07-23 22:38:42][chinaren.service.UserServiceImpl]2017-07-23 22:38:42 - register: validate password - 123456789
+[INFO] [2017-07-23 22:38:42][chinaren.service.UserServiceImpl]2017-07-23 22:38:42 - register: validate name - 李浩然
+[INFO] [2017-07-23 22:38:42][chinaren.service.UserServiceImpl]2017-07-23 22:38:42 - register: validate phone - 15528235793
+[INFO] [2017-07-23 22:38:42][chinaren.service.UserServiceImpl]2017-07-23 22:38:42 - register: create head image
+[INFO] [2017-07-23 22:38:42][chinaren.service.UserServiceImpl]2017-07-23 22:38:42 - register: set default introduction - 此人很懒，什么也没有留下！
+[INFO] [2017-07-23 22:38:42][chinaren.service.UserServiceImpl]2017-07-23 22:38:42 - register: transform password - 79382a182f0e923342448760518b0ca8fc3ed8244d89de19
+[INFO] [2017-07-23 22:38:42][chinaren.service.UserServiceImpl]2017-07-23 22:38:42 - register: insert user into database
