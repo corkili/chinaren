@@ -177,6 +177,48 @@ public class ClassDaoImpl extends BaseDao implements ClassDao {
 	}
 
 	/**
+	 * @see chinaren.dao.ClassDao#selectClasses()
+	 */
+	@Override
+	public Result<List<Class>> selectClasses() {
+		logger.info(dateFormat.format(new Date()) + "action: select all classes");
+		String sql = "select * from " + TABLE_CLASS;
+		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
+		List<Class> classes = null;
+		boolean successful = false;
+		String message = "";
+		try {
+			RowMapper<Class> rowMapper = BeanPropertyRowMapper.newInstance(Class.class);
+			Object[] params = { };
+			classes = jdbcTemplate.query(sql, params, rowMapper);
+			classes = classes != null ? classes : new ArrayList<Class>();
+			successful = true;
+			message = successful ? "select<successful>" : "select<failed>";
+			for (Class clazz : classes) {
+				Result<List<Long>> result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_TRUE);
+				if (result.isSuccessful()) {
+					clazz.setClassmates(result.getResult());
+					result = attendDao.selectUserIdByClassId(clazz.getClassId(), STATUS_FALSE);
+					if (result.isSuccessful()) {
+						clazz.setNotApplys(result.getResult());
+					} else {
+						clazz = null;
+					}
+				} else {
+					clazz = null;
+				}
+			}
+			classes.removeAll(Collections.singleton(null));	// 移除null元素
+		} catch (DataAccessException e) {
+			successful = false;
+			message = "select<failed>";
+			classes = new ArrayList<Class>();
+		}
+		logger.info(dateFormat.format(new Date()) + "result: " + message);
+		return new Result<List<Class>>(successful, message, classes);
+	}
+	
+	/**
 	 * @see chinaren.dao.ClassDao#selectClasses(java.lang.String)
 	 */
 	@Override

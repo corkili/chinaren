@@ -50,6 +50,13 @@ public interface ClassDao {
 	public Result<List<Class>> selectClassesByManagerId(long managerId);
 	
 	/**
+	 * 根据班级信息，从数据库中获取所有班级实体数据
+	 * @author 李浩然
+	 * @return 包含一个班级实体列表的结果实例，若操作失败或不存在相应数据，结果中的班级列表为空列表
+	 */
+	public Result<List<Class>> selectClasses();
+	
+	/**
 	 * 根据班级信息，从数据库中获取班级实体数据（完全匹配）
 	 * @author 李浩然
 	 * @param province 省份

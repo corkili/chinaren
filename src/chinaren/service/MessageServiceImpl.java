@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import chinaren.common.MessageContext;
 import chinaren.dao.MessageDao;
 import chinaren.model.Message;
 import chinaren.model.Result;
@@ -26,12 +25,12 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired
 	private MessageDao messageDao;
 	
-	private Logger logger = Logger.getLogger(ClassServiceImpl.class);
+	private Logger logger = Logger.getLogger(MessageServiceImpl.class);
 	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss - ");
 	
 	/**
-	 * 
+	 * 构造方法
 	 */
 	public MessageServiceImpl() {
 		
@@ -42,7 +41,6 @@ public class MessageServiceImpl implements MessageService {
 	 */
 	@Override
 	public Result<Boolean> releaseMessage(Message message) {
-		// logger.info(dateFormat.format(new Date()) + "");
 		logger.info(dateFormat.format(new Date()) + "release message");
 		
 		if (message == null
