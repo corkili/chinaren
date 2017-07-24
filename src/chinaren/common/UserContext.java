@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import chinaren.dao.UserDao;
 import chinaren.model.Result;
 import chinaren.model.User;
-import chinaren.util.EmailUtil;
 
 /**
  * 用户数据动态维护类
