@@ -20,7 +20,7 @@ public class Result<T> {
 	private String message;
 	
 	/**
-	 * 操作结果
+	 * 操作结果实体
 	 */
 	private T result;
 	
@@ -37,21 +37,27 @@ public class Result<T> {
 	}
 
 	/**
-	 * @return the successful
+	 * 操作是否成功
+	 * @author 李浩然
+	 * @return 成功返回true；失败返回false
 	 */
 	public boolean isSuccessful() {
 		return successful;
 	}
 
 	/**
-	 * @return the message
+	 * 获取操作结果信息
+	 * @author 李浩然
+	 * @return 操作结果信息
 	 */
 	public String getMessage() {
 		return message;
 	}
 
 	/**
-	 * @return the result
+	 * 获取操作结果实体
+	 * @author 李浩然
+	 * @return 操作结果实体
 	 */
 	public T getResult() {
 		return result;

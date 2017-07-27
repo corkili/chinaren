@@ -68,7 +68,7 @@ public final class CaptchaUtil
     /**
      * 返回某颜色的反色
      * @author 李浩然
-     * @param c
+     * @param c 要取反色的颜色
      * @return 颜色的反色
      */
     private static Color getReverseColor(Color c)
@@ -80,10 +80,10 @@ public final class CaptchaUtil
     /**
      * 输出随机数
      * @author 李浩然
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * @param request HTTP请求实体
+     * @param response HTTP响应实体
+     * @throws ServletException 发生Servlet错误时，抛出该异常
+     * @throws IOException 发生IO错误时，抛出该异常
      */
     public static void outputCaptcha(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException

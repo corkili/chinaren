@@ -51,7 +51,7 @@ public class Class implements Serializable{
 	 * 班级描述
 	 */
 	@Column(name = BaseDao.COL_DESCRIPTION)
-	private String decription;
+	private String description;
 
 	/**
 	 * 班级所在省份
@@ -76,6 +76,9 @@ public class Class implements Serializable{
 	 */
 	@Column(name = BaseDao.COL_MANAGER_ID)
 	private long managerId;
+
+	@Column(name = BaseDao.COL_MANAGER_NAME)
+	private String managerName;
 	
 	/**
 	 * 班级中所有同学的ID列表
@@ -95,154 +98,218 @@ public class Class implements Serializable{
 	}
 
 	/**
-	 * @return the classId
+	 * 获取班级ID
+	 * @author 李浩然
+	 * @return 班级ID
 	 */
 	public long getClassId() {
 		return classId;
 	}
 
 	/**
-	 * @param classId the classId to set
+	 * 设置班级ID
+	 * @author 李浩然
+	 * @param classId 班级ID
 	 */
 	public void setClassId(long classId) {
 		this.classId = classId;
 	}
 
 	/**
-	 * @return the school
+	 * 获取学校名称
+	 * @author 李浩然
+	 * @return 学校名称
 	 */
 	public String getSchool() {
 		return school;
 	}
 
 	/**
-	 * @param school the school to set
+	 * 设置学校名称
+	 * @author 李浩然
+	 * @param school 学校名称
 	 */
 	public void setSchool(String school) {
 		this.school = school;
 	}
 
 	/**
-	 * @return the className
+	 * 获取班级名称
+	 * @author 李浩然
+	 * @return 班级名称
 	 */
 	public String getClassName() {
 		return className;
 	}
 
 	/**
-	 * @param className the className to set
+	 * 设置班级名称
+	 * @author 李浩然
+	 * @param className 班级名称
 	 */
 	public void setClassName(String className) {
 		this.className = className;
 	}
 
 	/**
-	 * @return the gradeYear
+	 * 获取年级
+	 * @author 李浩然
+	 * @return 年级
 	 */
 	public String getGradeYear() {
 		return gradeYear;
 	}
 
 	/**
-	 * @param gradeYear the gradeYear to set
+	 * 设置年级
+	 * @author 李浩然
+	 * @param gradeYear 年级
 	 */
 	public void setGradeYear(String gradeYear) {
 		this.gradeYear = gradeYear;
 	}
+	
 
 	/**
-	 * @return the decription
+	 * 获取班级描述
+	 * @author 李浩然
+	 * @return 班级描述
 	 */
-	public String getDecription() {
-		return decription;
+	public String getDescription() {
+		return description;
 	}
 
 	/**
-	 * @param decription the decription to set
+	 * 设置班级描述
+	 * @author 李浩然
+	 * @param description 班级描述
 	 */
-	public void setDecription(String decription) {
-		this.decription = decription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
-	 * @return the province
+	 * 获取班级所属省份
+	 * @author 李浩然
+	 * @return 班级所属省份
 	 */
 	public String getProvince() {
 		return province;
 	}
 
 	/**
-	 * @param province the province to set
+	 * 设置班级所属省份
+	 * @author 李浩然
+	 * @param province 班级所属省份
 	 */
 	public void setProvince(String province) {
 		this.province = province;
 	}
 
 	/**
-	 * @return the city
+	 * 获取班级所属城市
+	 * @author 李浩然
+	 * @return 班级所属城市
 	 */
 	public String getCity() {
 		return city;
 	}
 
 	/**
-	 * @param city the city to set
+	 * 设置班级所属城市
+	 * @author 李浩然
+	 * @param city 班级所属城市
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
 	/**
-	 * @return the area
+	 * 获取班级所属地区
+	 * @author 李浩然
+	 * @return 班级所属地区
 	 */
 	public String getArea() {
 		return area;
 	}
 
 	/**
-	 * @param area the area to set
+	 * 设置班级所属地区
+	 * @author 李浩然
+	 * @param area 班级所属地区
 	 */
 	public void setArea(String area) {
 		this.area = area;
 	}
 
 	/**
-	 * @return the managerId
+	 * 获取班级管理者ID
+	 * @author 李浩然
+	 * @return 获取班级管理者ID
 	 */
 	public long getManagerId() {
 		return managerId;
 	}
 
 	/**
-	 * @param managerId the managerId to set
+	 * 设置班级管理者ID
+	 * @author 李浩然
+	 * @param managerId 获取班级管理者ID
 	 */
 	public void setManagerId(long managerId) {
 		this.managerId = managerId;
 	}
 
 	/**
-	 * @return the classmates
+	 * 获取班级管理者姓名
+	 * @author 李浩然
+	 * @return 班级管理者姓名
+	 */
+	public String getManagerName() {
+		return managerName;
+	}
+
+	/**
+	 * 设置班级管理者姓名
+	 * @author 李浩然
+	 * @param managerName 班级管理者姓名
+	 */
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+	
+	
+	/**
+	 * 获取班级同学ID列表
+	 * @author 李浩然
+	 * @return 班级同学ID列表
 	 */
 	public List<Long> getClassmates() {
 		return classmates;
 	}
 
 	/**
-	 * @param classmates the classmates to set
+	 * 设置班级同学ID列表
+	 * @author 李浩然
+	 * @param classmates 班级同学ID列表
 	 */
 	public void setClassmates(List<Long> classmates) {
 		this.classmates = classmates;
 	}
 
 	/**
-	 * @return the notApplys
+	 * 获取待审核用户ID列表
+	 * @author 李浩然
+	 * @return 待审核用户ID列表
 	 */
 	public List<Long> getNotApplys() {
 		return notApplys;
 	}
 
 	/**
-	 * @param notApplys the notApplys to set
+	 * 设置待审核用户ID列表
+	 * @author 李浩然
+	 * @param notApplys 待审核用户ID列表
 	 */
 	public void setNotApplys(List<Long> notApplys) {
 		this.notApplys = notApplys;

@@ -1,6 +1,5 @@
 package chinaren.common;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,8 +18,6 @@ import javax.servlet.http.HttpSession;
 @Component("SpringMVCInterceptor")
 public class SessionInterceptor implements HandlerInterceptor {
 
-    private Logger logger = Logger.getLogger(SessionInterceptor.class);
-
     /**
      * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
      */
@@ -33,7 +30,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
 
         // 过滤登录、退出访问
-        String[] noFilters = new String[] { "login", "register", "captcha" };
+        String[] noFilters = new String[] { "login", "register", "captcha", "sendEmail", "resetPWD" };
 
         String uri = request.getRequestURI();
 
@@ -41,18 +38,18 @@ public class SessionInterceptor implements HandlerInterceptor {
 
         for (String s : noFilters) {
             if(uri.contains(s)){
-                logger.info("true");
+//                logger.info("true");
                 return true;
             }
         }
 
         if(userId == null) {
-            logger.info("false");
+//            logger.info("false");
             response.sendRedirect("/no_login");
             return false;
         }
 
-        logger.info("true");
+//        logger.info("true");
         return true;
     }
 

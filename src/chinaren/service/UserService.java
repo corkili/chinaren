@@ -5,10 +5,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import chinaren.model.StatisticsResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import chinaren.model.Result;
 import chinaren.model.User;
+
+import java.text.ParseException;
 
 /**
  * 用户相关数据处理，服务层接口
@@ -108,6 +111,29 @@ public interface UserService {
 	 * @return 验证结果
 	 */
 	public Result<Boolean> verifyEmail(String email, String code);
+
+	/**
+	 * 获取留言数据统计结果
+	 * @author 李浩然
+	 * @param userId 用户ID
+	 * @return 留言数据统计结果
+	 * @throws ParseException 解析字符串出错时抛出该异常
+	 */
+	public StatisticsResult getStatisticsResult(long userId) throws ParseException;
+
+	/**
+	 * 获取地址动态数据信息
+	 * @author 李浩然
+	 * @return 地址动态数据信息
+	 */
+	public UserServiceImpl.AddressContext getAddressContext();
+
+	/**
+	 * 获取用户动态数据信息
+	 * @author 李浩然
+	 * @return 用户动态数据信息
+	 */
+	public UserServiceImpl.UserContext getUserContext();
 }
 
 

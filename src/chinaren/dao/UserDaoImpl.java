@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import chinaren.util.HeadImageUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -63,21 +64,11 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			message = successful ? "select<successful>" : "select<failed>";
 			if (successful) {
 				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_TRUE);
-				successful = result.isSuccessful();
 				message = message + " and " + result.getMessage();
-				if (successful) {
-					user.setBelongClass(result.getResult());
-					result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_FALSE);
-					successful = result.isSuccessful();
-					message += " and " + result.getMessage();
-					if (successful) {
-						user.setApplyClass(result.getResult());
-					} else {
-						user = null;
-					}
-				} else {
-					user = null;
-				}
+				user.setBelongClass(result.getResult());
+				result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_FALSE);
+				message += " and " + result.getMessage();
+				user.setApplyClass(result.getResult());
 			}
 		} catch (Exception e) {
 			successful = false;
@@ -106,21 +97,11 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			message = successful ? "select<successful>" : "select<failed>";
 			if (successful) {
 				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_TRUE);
-				successful = result.isSuccessful();
 				message = message + " and " + result.getMessage();
-				if (successful) {
-					user.setBelongClass(result.getResult());
-					result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_FALSE);
-					successful = result.isSuccessful();
-					message += " and " + result.getMessage();
-					if (successful) {
-						user.setApplyClass(result.getResult());
-					} else {
-						user = null;
-					}
-				} else {
-					user = null;
-				}
+				user.setBelongClass(result.getResult());
+				result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_FALSE);
+				message += " and " + result.getMessage();
+				user.setApplyClass(result.getResult());
 			}
 		} catch (Exception e) {
 			successful = false;
@@ -147,7 +128,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			users = jdbcTemplate.query(sql, params, rowMapper);
 			users = users != null ? users : new ArrayList<User>();
 			successful = true;
-			message = successful ? "select<successful>" : "select<failed>";
+			message = "select<successful>";
 			for (User user : users) {
 				Result<List<Long>> result = attendDao.selectClassIdByUserId(user.getUserId(), STATUS_TRUE);
 				if (result.isSuccessful()) {
@@ -195,9 +176,10 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			message = successful ? "insert<successful>" : "insert<failed>";
 			if (successful) {
 				Result<User> result = selectUserByEmail(user.getEmail());
-				successful = result.isSuccessful();
 				message = message + " and " + result.getMessage();
 				newUser = result.getResult();
+                newUser.setHeadImage(HeadImageUtil.BASE_NAME + newUser.getUserId() + HeadImageUtil.POSTFIX);
+                jdbcTemplate.update("update " + TABLE_USER + " set " + COL_HEAD_IMAGE + "=?", newUser.getHeadImage());
 			}
 		} catch (Exception e) {
 			successful = false;
@@ -245,7 +227,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		String sql = "update " + TABLE_USER + " set " + COL_NAME + "=?, "
 				+ COL_SEX + "=?, " + COL_PHONE + "=?, " + COL_INTRODUCTION
 				+ "=?, " + COL_PROVINCE + "=?, " + COL_CITY + "=?, "
-				+ COL_AREA + "=? where" + COL_USER_ID + "=?";
+				+ COL_AREA + "=? where " + COL_USER_ID + "=?";
 		logger.info(dateFormat.format(new Date()) + "sql: " + sql);
 		User newUser = null;
 		boolean successful = false;
@@ -258,7 +240,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 			message = successful ? "update<successful>" : "update<failed>";
 			if (successful) {
 				Result<User> result = selectUserByUserId(user.getUserId());
-				user = result.getResult();
+				newUser = result.getResult();
 				successful = result.isSuccessful();
 				message = message + " and " + result.getMessage();
 			}

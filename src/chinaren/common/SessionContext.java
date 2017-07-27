@@ -17,6 +17,8 @@ public class SessionContext {
 	 */
     public static final String ATTR_USER_ID = "userId";
 
+    public static final String ATTR_USER_NAME = "name";
+
     /**
      * 静态成员，单例
      */
@@ -37,7 +39,7 @@ public class SessionContext {
     /**
      * 获取单例对象的工厂方法
      * @author 李浩然
-     * @return
+     * @return Session上下文实例
      */
     public static SessionContext getInstance() {
         if(instance == null) {
@@ -49,7 +51,7 @@ public class SessionContext {
     /**
      * 添加一个session
      * @author 李浩然
-     * @param session
+     * @param session 待添加的Session
      */
     public synchronized void addSession(HttpSession session) {
         if (session != null) {
@@ -60,7 +62,7 @@ public class SessionContext {
     /**
      * 删除一个session
      * @author 李浩然
-     * @param session
+     * @param session 待删除的Session
      */
     public synchronized void delSession(HttpSession session) {
         if(session != null) {
@@ -74,8 +76,8 @@ public class SessionContext {
     /**
      * 根据sessionId，获取一个session
      * @author 李浩然
-     * @param sessionId
-     * @return
+     * @param sessionId Session的唯一ID
+     * @return 相应的Session
      */
     public synchronized HttpSession getSession(String sessionId) {
         if(sessionId == null)
@@ -86,7 +88,7 @@ public class SessionContext {
     /**
      * 获取sessionMap
      * @author 李浩然
-     * @return sessionMap
+     * @return sessionMap Session集合
      */
     public Map<String, HttpSession> getSessionMap() {
         return sessionMap;
@@ -101,6 +103,11 @@ public class SessionContext {
         this.sessionMap = sessionMap;
     }
     
+    /**
+     * 更新Session
+     * @author 李浩然
+     * @param session 待更新的Session
+     */
     public void sessionHandlerByCacheMap(HttpSession session) {
         synchronized (this) {
             String userId = session.getAttribute(SessionContext.ATTR_USER_ID).toString();

@@ -117,182 +117,234 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * @return the userId
+	 * 获取用户ID
+	 * @author 李浩然
+	 * @return 用户ID
 	 */
 	public long getUserId() {
 		return userId;
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * 设置用户ID
+	 * @author 李浩然
+	 * @param userId 用户ID
 	 */
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
 	/**
-	 * @return the email
+	 * 获取用户邮箱
+	 * @author 李浩然
+	 * @return 用户邮箱
 	 */
 	public String getEmail() {
 		return email;
 	}
 
 	/**
-	 * @param email the email to set
+	 * 设置用户邮箱
+	 * @author 李浩然
+	 * @param email 用户邮箱
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
 	/**
-	 * @return the password
+	 * 获取用户密码哈希值
+	 * @author 李浩然
+	 * @return 用户密码哈希值
 	 */
 	public String getPassword() {
 		return password;
 	}
 
 	/**
-	 * @param password the password to set
+	 * 设置用户密码哈希值
+	 * @author 李浩然
+	 * @param password 用户密码哈希值
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	/**
-	 * @return the name
+	 * 获取用户实名
+	 * @author 李浩然
+	 * @return 用户实名
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param name the name to set
+	 * 设置用户实名
+	 * @author 李浩然
+	 * @param name 用户实名
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @return the sex
+	 * 获取性别
+	 * @author 李浩然
+	 * @return 性别
 	 */
 	public String getSex() {
 		return sex;
 	}
 
 	/**
-	 * @param sex the sex to set
+	 * 设置性别
+	 * @author 李浩然
+	 * @param sex 性别
 	 */
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
 	/**
-	 * @return the phone
+	 * 获取手机号
+	 * @author 李浩然
+	 * @return 手机号
 	 */
 	public String getPhone() {
 		return phone;
 	}
 
 	/**
-	 * @param phone the phone to set
+	 * 设置手机号
+	 * @author 李浩然
+	 * @param phone 手机号
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
 	/**
-	 * @return the introduction
+	 * 获取个人简介
+	 * @author 李浩然
+	 * @return 个人简介
 	 */
 	public String getIntroduction() {
 		return introduction;
 	}
 
 	/**
-	 * @param introduction the introduction to set
+	 * 设置个人简介
+	 * @author 李浩然
+	 * @param introduction 个人简介
 	 */
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
 	}
 
 	/**
-	 * @return the headImage
+	 * 获取头像文件路径
+	 * @author 李浩然
+	 * @return 头像文件路径
 	 */
 	public String getHeadImage() {
 		return headImage;
 	}
 
 	/**
-	 * @param headImage the headImage to set
+	 * 设置头像文件路径
+	 * @author 李浩然
+	 * @param headImage 头像文件路径
 	 */
 	public void setHeadImage(String headImage) {
 		this.headImage = headImage;
 	}
 
 	/**
-	 * @return the province
+	 * 获取所在省份
+	 * @author 李浩然
+	 * @return 所在省份
 	 */
 	public String getProvince() {
 		return province;
 	}
 
 	/**
-	 * @param province the province to set
+	 * 设置所在省份
+	 * @author 李浩然
+	 * @param province 所在省份
 	 */
 	public void setProvince(String province) {
 		this.province = province;
 	}
 
 	/**
-	 * @return the city
+	 * 获取所在城市
+	 * @author 李浩然
+	 * @return 所在城市
 	 */
 	public String getCity() {
 		return city;
 	}
 
 	/**
-	 * @param city the city to set
+	 * 设置所在城市
+	 * @author 李浩然
+	 * @param city 所在城市
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
 	/**
-	 * @return the area
+	 * 获取所在地区
+	 * @author 李浩然
+	 * @return 所在地区
 	 */
 	public String getArea() {
 		return area;
 	}
 
 	/**
-	 * @param area the area to set
+	 * 设置所在地区
+	 * @author 李浩然
+	 * @param area 所在地区
 	 */
 	public void setArea(String area) {
 		this.area = area;
 	}
 
 	/**
-	 * @return the belongClass
+	 * 获取用户所属班级的ID列表
+	 * @author 李浩然
+	 * @return 用户所属班级的ID列表
 	 */
 	public List<Long> getBelongClass() {
 		return belongClass;
 	}
 
 	/**
-	 * @param belongClass the belongClass to set
+	 * 设置用户所属班级的ID列表
+	 * @author 李浩然
+	 * @param belongClass 用户所属班级的ID列表
 	 */
 	public void setBelongClass(List<Long> belongClass) {
 		this.belongClass = belongClass;
 	}
 
 	/**
-	 * @return the applyClass
+	 * 获取用户申请加入的班级的ID列表
+	 * @author 李浩然
+	 * @return 用户申请加入的班级的ID列表
 	 */
 	public List<Long> getApplyClass() {
 		return applyClass;
 	}
 
 	/**
-	 * @param applyClass the applyClass to set
+	 * 设置用户申请加入的班级的ID列表
+	 * @author 李浩然
+	 * @param applyClass 用户申请加入的班级的ID列表
 	 */
 	public void setApplyClass(List<Long> applyClass) {
 		this.applyClass = applyClass;

@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import chinaren.model.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import chinaren.common.UserContext;
 import chinaren.dao.AttendDao;
 import chinaren.dao.BaseDao;
 import chinaren.dao.ClassDao;
@@ -35,15 +35,15 @@ public class ClassServiceImpl implements ClassService {
 	private Logger logger = Logger.getLogger(ClassServiceImpl.class);
 	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss - ");
-	
-	private UserContext userContext;
-	
+
+	@Autowired
+	private UserService userService;
+
 	/**
 	 * 构造方法
 	 */
 	public ClassServiceImpl() {
 		// logger.info(dateFormat.format(new Date()) + "");
-		userContext = UserContext.getUserContext();
 	}
 
 	/**
@@ -93,34 +93,10 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public Result<List<Class>> searchClasses(String province, String city, String area, String school, String gradeYear,
 			String className) {
-		Result<List<Class>> result;
-		if (province == null || province.trim().equals("")) {
-			logger.info(dateFormat.format(new Date()) + "search classes - all");
-			result = classDao.selectClasses();
-		} else if (city == null || city.trim().equals("")) {
-			logger.info(dateFormat.format(new Date()) + "search classes - " + province);
-			result = classDao.selectClasses(province.trim());
-		} else if (area == null || area.trim().equals("")) {
-			logger.info(dateFormat.format(new Date()) + "search classes - " + province + "::" + city);
-			result = classDao.selectClasses(province.trim(), city.trim());
-		} else if (school == null) {
-			logger.info(dateFormat.format(new Date()) + "search classes - " + province + "::" + city + "::" + area);
-			result = classDao.selectClasses(province.trim(), city.trim(), area.trim());
-		} else if (gradeYear == null) {
-			logger.info(dateFormat.format(new Date()) + "search classes - " + province + "::" + city + "::" + area
-					+ "::" + school);
-			result = classDao.selectClasses(province.trim(), city.trim(), area.trim(), school.trim());
-		} else if (className == null) {
-			logger.info(dateFormat.format(new Date()) + "search classes - " + province + "::" + city + "::" + area
-					+ "::" + school + "::" + gradeYear);
-			result = classDao.selectClasses(province.trim(), city.trim(), area.trim(), school.trim(), gradeYear.trim());
-		} else {
-			logger.info(dateFormat.format(new Date()) + "search classes - " + province + "::" + city + "::" + area
-					+ "::" + school + "::" + gradeYear + "::" + className);
-			result = classDao.selectClasses(province.trim(), city.trim(), area.trim(), 
-					school.trim(), gradeYear.trim(), className.trim());
-		}
-		return result;
+
+		logger.info(dateFormat.format(new Date()) + "search classes - " + province + "::" + city + "::" + area
+				+ "::" + school + "::" + gradeYear + "::" + className);
+		return classDao.selectClasses(province, city, area, school, gradeYear, className);
 	}
 
 	/**
@@ -166,8 +142,8 @@ public class ClassServiceImpl implements ClassService {
 			return new Result<Boolean>(false, "已存在相同名称的班级", false);
 		}
 		
-		if (clazz.getDecription() == null || clazz.getDecription().trim().equals("")) {
-			clazz.setDecription("班长很懒，未留下任何东西！");
+		if (clazz.getDescription() == null || clazz.getDescription().trim().equals("")) {
+			clazz.setDescription("班长很懒，未留下任何东西！");
 		}
 		
 		Result<Class> result = classDao.insertClass(clazz); 
@@ -177,7 +153,7 @@ public class ClassServiceImpl implements ClassService {
 			return new Result<Boolean>(false, "数据库错误，请重试！", false);
 		}
 		logger.info(dateFormat.format(new Date()) + "create class: successful - class " + result.getResult().getClassId());
-		userContext.update(result.getResult().getManagerId());
+		userService.getUserContext().update(result.getResult().getManagerId());
 		return new Result<Boolean>(true, "创建班级成功", true);
 	}
 
@@ -192,12 +168,16 @@ public class ClassServiceImpl implements ClassService {
 			logger.info(dateFormat.format(new Date()) + "apply to join class: failed - " + userId + " join " + classId);
 			return new Result<Boolean>(false, "不存在相应的班级", false);
 		}
+		if (result.getResult().getClassmates().contains(userId) || result.getResult().getNotApplys().contains(userId)) {
+			logger.info(dateFormat.format(new Date()) + "apply to join class: failed - " + userId + " join " + classId);
+			return new Result<Boolean>(false, "已加入班级或已申请加入班级", false);
+		}
 		if (!attendDao.insertAttend(userId, classId).isSuccessful()) {
 			logger.info(dateFormat.format(new Date()) + "apply to join class: failed - " + userId + " join " + classId);
 			return new Result<Boolean>(false, "数据库错误，请重试", false);
 		}
 		logger.info(dateFormat.format(new Date()) + "apply to join class: successful - " + userId + " join " + classId);
-		userContext.update(userId, result.getResult().getManagerId());
+		userService.getUserContext().update(userId, result.getResult().getManagerId());
 		return new Result<Boolean>(true, "申请加入班级成功", true);
 	}
 
@@ -217,8 +197,25 @@ public class ClassServiceImpl implements ClassService {
 			return new Result<Boolean>(false, "数据库错误，请重试", false);
 		}
 		logger.info(dateFormat.format(new Date()) + "exit class: successful - " + userId + " exit " + classId);
-		userContext.update(userId, result.getResult().getManagerId());
+		userService.getUserContext().update(userId, result.getResult().getManagerId());
 		return new Result<Boolean>(true, "退出班级成功", true);
+	}
+
+	/**
+	 * @see chinaren.service.ClassService#getUsersByClassId(long, boolean)
+	 */
+	@Override
+	public Result<List<User>> getUsersByClassId(long classId, boolean status) {
+		Result<Class> classResult = classDao.selectClassByClassId(classId);
+		if (!classResult.isSuccessful()) {
+			return new Result<>(false, "数据库错误，请重试！", new ArrayList<>());
+		} else {
+			List<User> userList = new ArrayList<>();
+			for (long userId : status ? classResult.getResult().getClassmates() : classResult.getResult().getNotApplys()) {
+				userList.add(userService.getUserInformation(userId).getResult());
+			}
+			return new Result<>(true, "获取成功！", userList);
+		}
 	}
 
 	/**
@@ -246,7 +243,7 @@ public class ClassServiceImpl implements ClassService {
 		}
 		logger.info(dateFormat.format(new Date()) + "allow join class: successful - " + managerId 
 				+ " allow " + userId + " join " + classId);
-		userContext.update(userId, managerId);
+		userService.getUserContext().update(userId, managerId);
 		return new Result<Boolean>(true, "允许加入班级成功", true);
 	}
 
@@ -275,7 +272,7 @@ public class ClassServiceImpl implements ClassService {
 		}
 		logger.info(dateFormat.format(new Date()) + "refuse join class: successful - " + managerId 
 				+ " refuse " + userId + " join " + classId);
-		userContext.update(userId, managerId);
+		userService.getUserContext().update(userId, managerId);
 		return new Result<Boolean>(true, "拒绝加入班级成功", true);
 	}
 
@@ -304,7 +301,7 @@ public class ClassServiceImpl implements ClassService {
 		}
 		logger.info(dateFormat.format(new Date()) + "remove classmate from class: successful - " + managerId 
 				+ " remove " + userId + " from " + classId);
-		userContext.update(userId, managerId);
+		userService.getUserContext().update(userId, managerId);
 		return new Result<Boolean>(true, "移除班级成员成功", true);
 	}
 
@@ -321,7 +318,7 @@ public class ClassServiceImpl implements ClassService {
 					+ " remove class " + classId);
 			return new Result<Boolean>(false, "不存在相应的班级", false);
 		}
-		if (result.getResult().isManager(managerId)) {
+		if (!result.getResult().isManager(managerId)) {
 			logger.info(dateFormat.format(new Date()) + "remove class: failed - manager " + managerId 
 					+ " remove class " + classId);
 			return new Result<Boolean>(false, "非班级管理员不能进行此操作", false);
@@ -336,8 +333,36 @@ public class ClassServiceImpl implements ClassService {
 		List<Long> userId = new ArrayList<Long>();
 		userId.addAll(result.getResult().getClassmates());
 		userId.addAll(result.getResult().getNotApplys());
-		userContext.update(userId);
+		userService.getUserContext().update(userId);
 		return new Result<Boolean>(true, "删除班级成功", true);
+	}
+
+	/**
+	 * @see chinaren.service.ClassService#modifyDescription(long, long, java.lang.String)
+	 */
+	@Override
+	public Result<Boolean> modifyDescription(long managerId, long classId, String description) {
+        logger.info(dateFormat.format(new Date()) + "modify class's description - manager " + managerId
+                + " modify " + classId);
+        Result<Class> result = classDao.selectClassByClassId(classId);
+        if (!result.isSuccessful()) {
+            logger.info(dateFormat.format(new Date()) + "modify class's description: failed - manager " + managerId
+                    + " modify " + classId);
+            return new Result<Boolean>(false, "不存在相应的班级", false);
+        }
+        if (!result.getResult().isManager(managerId)) {
+            logger.info(dateFormat.format(new Date()) + "modify class's description: failed - manager " + managerId
+                    + " modify " + classId);
+            return new Result<Boolean>(false, "非班级管理员不能进行此操作", false);
+        }
+        if (!classDao.updateDescription(classId, description).isSuccessful()) {
+            logger.info(dateFormat.format(new Date()) + "modify class's description: failed - manager " + managerId
+                    + " modify " + classId);
+            return new Result<Boolean>(false, "数据库错误，请重试", false);
+        }
+        logger.info(dateFormat.format(new Date()) + "modify class's description: successful - manager " + managerId
+                + " modify " + classId);
+        return new Result<Boolean>(true, "修改班级简介成功", true);
 	}
 
 }
